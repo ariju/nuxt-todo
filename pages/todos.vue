@@ -1,5 +1,12 @@
 <template>
   <div>
+    <!-- {{ todos }} -->
+    <ul>
+      <li v-for="todo in todos" :key="todo.id">
+        <!-- {{ todo }} -->
+        {{ todo.done }} {{ todo.name }} {{ todo.created }}
+      </li>
+    </ul>
     <div class="form">
       <!-- v-on:submitでボタンが押された時にaddメソッドを呼ぶ -->
       <!-- preventはsubmitイベントによってページがリロードされない様にする -->
@@ -31,6 +38,11 @@
       add() {
         this.$store.dispatch('todos/add', this.name)
         this.name = ''
+      }
+    },
+    computed: {
+      todos() {
+        return this.$store.state.todos.todos
       }
     }
   }
