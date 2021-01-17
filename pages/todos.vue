@@ -5,7 +5,12 @@
     <ul>
       <li v-for="todo in todos" :key="todo.id">
         <!-- {{ todo }} -->
-        {{ todo.done }} {{ todo.name }} {{ todo.created }}
+        <input 
+        type="checkbox"
+        v-bind:checks="todo.done"
+        @change="toggle=(todo)">
+        
+        {{ todo.name }} {{ todo.created }}
         <!-- データの削除機能 -->
         <button v-on:click="remove(todo.id)">x</button>
       </li>
@@ -44,6 +49,9 @@
       },
       remove(id) {
         this.$store.dispatch('todos/remove', id)
+      },
+      toggle(todo) {
+        this.$store.dispatch('todos/toggle', todo)
       }
     },
     computed: {
