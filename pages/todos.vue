@@ -6,16 +6,18 @@
       <li v-for="todo in todos" :key="todo.id">
         <!-- {{ todo }} -->
         <!-- 完了、未完了のチェックBOX実装 -->
+        <span v-if="todo.created">
         <input 
         type="checkbox"
-        v-bind:checks="todo.done"
-        @change="toggle=(todo)">
+        v-bind:checked="todo.done"
+        @change="toggle(todo)">
         <!-- 取消線の実装 -->
         <span v-bind:class="{ done: todo.done }">
           {{ todo.name }} {{ todo.created.toDate() | dateFilter}}
         </span>
         <!-- データの削除機能 -->
         <button v-on:click="remove(todo.id)">x</button>
+        </span>
       </li>
     </ul>
     <div class="form">
@@ -60,9 +62,11 @@
     },
     computed: {
       todos() {
-        return this.$store.state.todos.todos
+        // return this.$store.state.todos.todos
+        return this.$store.getters['todos/orderdTodos']
       }
     },
+    // 日本時刻の表示
     filters: {
       dateFilter: function(date) {
         return moment(date).format('YYYY/MM/DD HH:mm:ss')
@@ -73,7 +77,7 @@
 
 <style>
 /* 取消線を実装 */
-li > span.done {
+li > span > span.done {
   text-decoration: line-through;
 }
 </style>
