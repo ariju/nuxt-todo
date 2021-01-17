@@ -1,10 +1,13 @@
 <template>
   <div>
     <!-- {{ todos }} -->
+    <!-- todoリストの表示 -->
     <ul>
       <li v-for="todo in todos" :key="todo.id">
         <!-- {{ todo }} -->
         {{ todo.done }} {{ todo.name }} {{ todo.created }}
+        <!-- データの削除機能 -->
+        <button v-on:click="remove(todo.id)">x</button>
       </li>
     </ul>
     <div class="form">
@@ -38,6 +41,9 @@
       add() {
         this.$store.dispatch('todos/add', this.name)
         this.name = ''
+      },
+      remove(id) {
+        this.$store.dispatch('todos/remove', id)
       }
     },
     computed: {
